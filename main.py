@@ -4,6 +4,7 @@ import pandas as pd
 app = FastAPI()
 
 df_userdata = pd.read_csv('src/usersdata.csv')
+df_countreviews = pd.read_csv('src/countreviews.csv')
 
 @app.get("/")
 async def root():
@@ -34,5 +35,27 @@ def userdata(User_id: str):
         "Num_items": num_items
     }
 
-@app.get('/genre/')
-def 
+@app.get('/countreviews/')
+def countreviews(start_date: str, end_date: str):
+    try:
+        # Convierte las fechas de entrada a objetos datetime
+        start_date = pd.to_datetime(start_date)
+        end_date = pd.to_datetime(end_date)
+
+        # Filtra el DataFrame para obtener revisiones en el rango de fechas dado
+        filtered_reviews = df_countreviews[(df_countreviews['posted'] >= start_date) & (df_countreviews['posted'] <= end_date)]
+
+        # Cuenta la cantidad de usuarios únicos que realizaron revisiones en el rango de fechas
+        num_users = filtered_reviews['user_id'].nunique()
+
+        # Calcula el porcentaje de recomendación promedio de los usuarios
+        recommendation_percentage = (filtered_reviews['recommend'].mean() * 100) if not filtered_reviews.empty else 0.0
+
+        return {
+            "Start_date": start_date,
+            "End_date": end_date,
+            "Num_users": num_users,
+            "Recommendation_percentage": recommendation_percentage
+        }
+    except Exception as e:
+        return {"error": str(e)}
