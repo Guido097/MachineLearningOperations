@@ -5,12 +5,13 @@ app = FastAPI()
 
 df_userdata = pd.read_csv('src/usersdata.csv')
 df_countreviews = pd.read_csv('src/countreviews.csv')
+df_genreptf = pd.read_csv('src/genre_ptf.csv')
 
 @app.get("/")
 async def root():
     return { ''' Hola! Este es un proyecto individual para la carrera de Data Science de Henry. Te recomiendo leer el README'''}
 
-@app.get("/userdata/")
+@app.get("/userdata/{User_id}")
 
 def userdata(User_id: str):
     try:
@@ -67,4 +68,18 @@ def countreviews(start_date: str, end_date: str):
 
 @app.get('/genre/')
 
-def
+def genre(género: str):
+    try:
+        # Calcula la suma de playtimeforever para el género especificado
+        genre_total_playtime = df_genreptf[df_genreptf[género] == 1]['playtimeforever'].sum()
+
+        # Calcula el ranking del género en base a la suma de playtimeforever
+        ranking = (df_genreptf[género] == 1).sum()
+
+        return {
+            "Genre": género,
+            "Total_PlayTimeForever": genre_total_playtime,
+            "Ranking_Position": ranking
+        }
+    except Exception as e:
+        return {"error": str(e)}
