@@ -6,10 +6,13 @@ app = FastAPI()
 df_userdata = pd.read_csv('src/usersdata.csv')
 
 @app.get("/")
+
 async def root():
     return { ''' Hola! Este es un proyecto individual para la carrera de Data Science de Henry. Te recomiendo leer el README'''}
 
-@app.get('/')
+
+@app.get("/")
+
 def userdata(User_id: str):
     # Filtra el DataFrame para obtener los datos del usuario específico
     user_data = df_userdata[df_userdata['User_id'] == User_id]
