@@ -7,10 +7,6 @@ df_userdata = pd.read_csv('src/usersdata.csv')
 
 @app.get("/")
 
-async def root():
-    return { ''' Hola! Este es un proyecto individual para la carrera de Data Science de Henry. Te recomiendo leer el README'''}
-
-
 @app.get("/")
 
 def userdata(User_id: str):
