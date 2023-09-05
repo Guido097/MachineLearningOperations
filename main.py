@@ -13,27 +13,31 @@ async def root():
 @app.get("/userdata/")
 
 def userdata(User_id: str):
-    # Filtra el DataFrame para obtener los datos del usuario específico
-    user_data = df_userdata[df_userdata['User_id'] == User_id]
+    try:
+    
+            # Filtra el DataFrame para obtener los datos del usuario específico
+        user_data = df_userdata[df_userdata['User_id'] == User_id]
 
-    if user_data.empty:
-        return {"message": "Usuario no encontrado"}
+        if user_data.empty:
+            return {"message": "Usuario no encontrado"}
 
-    # Calcula la cantidad de dinero gastado por el usuario
-    total_spent = user_data['price']
+        # Calcula la cantidad de dinero gastado por el usuario
+        total_spent = user_data['price']
 
-    # Calcula el porcentaje de recomendación en base a reviews.recommend
-    recommendation_percentage = user_data['recommendation_percent']
+        # Calcula el porcentaje de recomendación en base a reviews.recommend
+        recommendation_percentage = user_data['recommendation_percent']
 
-    # Obtiene la cantidad de elementos del usuario
-    num_items = user_data['items_count']
+        # Obtiene la cantidad de elementos del usuario
+        num_items = user_data['items_count']
 
-    return {
-        "User_id": User_id,
-        "Total_spent": total_spent,
-        "Recommendation_percentage": recommendation_percentage,
-        "Num_items": num_items
-    }
+        return {
+            "User_id": User_id,
+            "Total_spent": total_spent,
+            "Recommendation_percentage": recommendation_percentage,
+            "Num_items": num_items
+        }
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.get('/countreviews/')
 def countreviews(start_date: str, end_date: str):
