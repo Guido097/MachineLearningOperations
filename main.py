@@ -42,6 +42,9 @@ def countreviews(start_date: str, end_date: str):
         start_date = pd.to_datetime(start_date)
         end_date = pd.to_datetime(end_date)
 
+        # Convierte la columna 'date' del DataFrame a objetos datetime
+        df_countreviews['posted'] = pd.to_datetime(df_countreviews['posted'])
+
         # Filtra el DataFrame para obtener revisiones en el rango de fechas dado
         filtered_reviews = df_countreviews[(df_countreviews['posted'] >= start_date) & (df_countreviews['posted'] <= end_date)]
 
