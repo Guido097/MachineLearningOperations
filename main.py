@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import pandas as pd
 
-app = FastAPI
+app = FastAPI()
 
 df_userdata = pd.read_csv('src/usersdata.csv')
 
