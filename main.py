@@ -14,21 +14,20 @@ async def root():
 
 def userdata(User_id: str):
     try:
-    
-            # Filtra el DataFrame para obtener los datos del usuario específico
+        # Filtra el DataFrame para obtener los datos del usuario específico
         user_data = df_userdata[df_userdata['User_id'] == User_id]
 
         if user_data.empty:
             return {"message": "Usuario no encontrado"}
 
         # Calcula la cantidad de dinero gastado por el usuario
-        total_spent = user_data['price']
+        total_spent = user_data['price'].sum()
 
-        # Calcula el porcentaje de recomendación en base a reviews.recommend
-        recommendation_percentage = user_data['recommendation_percent']
+        # Calcula el porcentaje de recomendación promedio en base a recommendation_percent
+        recommendation_percentage = user_data['recommendation_percent'].mean()
 
         # Obtiene la cantidad de elementos del usuario
-        num_items = user_data['items_count']
+        num_items = user_data['items_count'].sum()
 
         return {
             "User_id": User_id,
