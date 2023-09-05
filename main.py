@@ -15,7 +15,7 @@ async def root():
 def userdata(User_id: str):
     try:
         # Filtra el DataFrame para obtener los datos del usuario específico
-        user_data = df_userdata[df_userdata['User_id'] == User_id]
+        user_data = df_userdata[df_userdata['user_id'] == User_id]
 
         if user_data.empty:
             return {"message": "Usuario no encontrado"}
