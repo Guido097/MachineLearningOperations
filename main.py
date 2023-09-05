@@ -21,13 +21,12 @@ def userdata(User_id: str):
             return {"message": "Usuario no encontrado"}
 
         # Calcula la cantidad de dinero gastado por el usuario
-        total_spent = user_data['price'].sum()
-
+        total_spent = user_data['price']
         # Calcula el porcentaje de recomendación promedio en base a recommendation_percent
-        recommendation_percentage = user_data['recommendation_percent'].mean()
+        recommendation_percentage = user_data['recommendation_percent']
 
         # Obtiene la cantidad de elementos del usuario
-        num_items = user_data['items_count'].sum()
+        num_items = user_data['items_count']
 
         return {
             "User_id": User_id,
@@ -65,3 +64,7 @@ def countreviews(start_date: str, end_date: str):
         }
     except Exception as e:
         return {"error": str(e)}
+
+@app.get('/genre/')
+
+def
